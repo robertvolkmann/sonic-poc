@@ -2,16 +2,18 @@ name: sonic-vxlan
 prefix: ""
 mgmt: {}
 topology:
+  defaults:
+    binds:
+      - conf/daemons:/etc/frr/daemons
+    sysctls:
+      net.ipv6.conf.all.disable_ipv6: 0
   kinds:
     linux:
-      image: debian:buster
+      image: frrouting/frr:v7.5.1
     sonic-vs:
       image: sonic-vs:202111
       binds:
-        - conf/daemons:/etc/frr/daemons
         - conf/start.sh:/usr/bin/start.sh
-      sysctls:
-        net.ipv6.conf.all.disable_ipv6: 0
   nodes:
     leaf01:
       kind: sonic-vs
@@ -25,14 +27,12 @@ topology:
         - conf/leaf02.conf:/etc/frr/frr.conf
     server01:
       kind: linux
-      exec:
-        - ip addr add 192.168.1.1/24 dev eth1
-        - ip route add 192.168.2.0/24 via 192.168.1.254
+      binds:
+        - conf/server01.conf:/etc/frr/frr.conf
     server02:
       kind: linux
-      exec:
-        - ip addr add 192.168.2.2/24 dev eth1
-        - ip route add 192.168.1.0/24 via 192.168.2.254
+      binds:
+        - conf/server02.conf:/etc/frr/frr.conf
     spine01:
       kind: sonic-vs
       binds:
@@ -50,4 +50,3 @@ topology:
   - endpoints: ["spine02:eth2", "leaf02:eth2"]
   - endpoints: ["leaf01:eth3", "server01:eth1"]
   - endpoints: ["leaf02:eth3", "server02:eth1"]
-

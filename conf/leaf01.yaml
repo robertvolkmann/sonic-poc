@@ -17,7 +17,6 @@ VLAN:
 VLAN_INTERFACE:
   Vlan10:
     vrf_name: Vrf01
-  Vlan10|192.168.1.254/24: { }
   Vlan30:
     vrf_name: Vrf01
 VLAN_MEMBER:
