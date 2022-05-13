@@ -1,0 +1,36 @@
+name: sonic-vxlan
+prefix: ""
+mgmt: {}
+topology:
+  kinds:
+    linux:
+      image: debian:buster
+    sonic-vs:
+      image: sonic-vs:202111
+      binds:
+        - conf/daemons:/etc/frr/daemons
+        - conf/start.sh:/usr/bin/start.sh
+  nodes:
+    server01:
+      kind: linux
+      exec:
+        - ip addr add 192.168.3.1/24 dev eth1
+    server02:
+      kind: linux
+      exec:
+        - ip addr add 192.168.3.2/24 dev eth1
+    sonic01:
+      kind: sonic-vs
+      binds:
+        - conf/sonic01.yaml:/etc/sonic/custom_setup.yaml
+        - conf/sonic01.conf:/etc/frr/frr.conf
+    sonic02:
+      kind: sonic-vs
+      binds:
+        - conf/sonic02.yaml:/etc/sonic/custom_setup.yaml
+        - conf/sonic02.conf:/etc/frr/frr.conf
+  links:
+  - endpoints: ["sonic01:eth1", "sonic02:eth1"]
+  - endpoints: ["sonic01:eth2", "server01:eth1"]
+  - endpoints: ["sonic02:eth2", "server02:eth1"]
+
