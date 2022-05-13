@@ -11,11 +11,22 @@ PORT:
   Ethernet4: 
     admin_status: up
 VLAN:
+  Vlan20:
+    vlanid: '20'
   Vlan30:
     vlanid: '30'
+VLAN_INTERFACE:
+  Vlan20:
+    vrf_name: Vrf01
+  Vlan20|192.168.2.254/24: { }
+  Vlan30:
+    vrf_name: Vrf01
 VLAN_MEMBER:
-  Vlan30|Ethernet4:
+  Vlan20|Ethernet4:
     tagging_mode: untagged
+VRF:
+  Vrf01:
+    vni: '3000'
 VXLAN_EVPN_NVO:
   nvo:
     source_vtep: vtep
@@ -23,7 +34,9 @@ VXLAN_TUNNEL:
   vtep:
     src_ip: 2.2.2.2
 VXLAN_TUNNEL_MAP:
+  vtep|map_2000_Vlan20:
+    vlan: Vlan20
+    vni: '2000'
   vtep|map_3000_Vlan30:
     vlan: Vlan30
     vni: '3000'
-
