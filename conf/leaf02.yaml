@@ -2,10 +2,12 @@
 LOOPBACK_INTERFACE:
   Loopback0: {}
   Loopback0|10.0.0.12/32: {}
-PORT: 
-  Ethernet0: 
+PORT:
+  Ethernet0:
     admin_status: up
-  Ethernet4: 
+  Ethernet4:
+    admin_status: up
+  Ethernet8:
     admin_status: up
 VLAN:
   Vlan20:
@@ -19,7 +21,7 @@ VLAN_INTERFACE:
   Vlan30:
     vrf_name: Vrf01
 VLAN_MEMBER:
-  Vlan20|Ethernet4:
+  Vlan20|Ethernet8:
     tagging_mode: untagged
 VRF:
   Vrf01:

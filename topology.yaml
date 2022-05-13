@@ -13,6 +13,16 @@ topology:
       sysctls:
         net.ipv6.conf.all.disable_ipv6: 0
   nodes:
+    leaf01:
+      kind: sonic-vs
+      binds:
+        - conf/leaf01.yaml:/etc/sonic/custom_setup.yaml
+        - conf/leaf01.conf:/etc/frr/frr.conf
+    leaf02:
+      kind: sonic-vs
+      binds:
+        - conf/leaf02.yaml:/etc/sonic/custom_setup.yaml
+        - conf/leaf02.conf:/etc/frr/frr.conf
     server01:
       kind: linux
       exec:
@@ -23,18 +33,21 @@ topology:
       exec:
         - ip addr add 192.168.2.2/24 dev eth1
         - ip route add 192.168.1.0/24 via 192.168.2.254
-    sonic01:
+    spine01:
       kind: sonic-vs
       binds:
-        - conf/sonic01.yaml:/etc/sonic/custom_setup.yaml
-        - conf/sonic01.conf:/etc/frr/frr.conf
-    sonic02:
+        - conf/spine01.yaml:/etc/sonic/custom_setup.yaml
+        - conf/spine01.conf:/etc/frr/frr.conf
+    spine02:
       kind: sonic-vs
       binds:
-        - conf/sonic02.yaml:/etc/sonic/custom_setup.yaml
-        - conf/sonic02.conf:/etc/frr/frr.conf
+        - conf/spine02.yaml:/etc/sonic/custom_setup.yaml
+        - conf/spine02.conf:/etc/frr/frr.conf
   links:
-  - endpoints: ["sonic01:eth1", "sonic02:eth1"]
-  - endpoints: ["sonic01:eth2", "server01:eth1"]
-  - endpoints: ["sonic02:eth2", "server02:eth1"]
+  - endpoints: ["spine01:eth1", "leaf01:eth1"]
+  - endpoints: ["spine01:eth2", "leaf02:eth1"]
+  - endpoints: ["spine02:eth1", "leaf01:eth2"]
+  - endpoints: ["spine02:eth2", "leaf02:eth2"]
+  - endpoints: ["leaf01:eth3", "server01:eth1"]
+  - endpoints: ["leaf02:eth3", "server02:eth1"]
 

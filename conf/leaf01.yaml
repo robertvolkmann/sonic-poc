@@ -7,6 +7,8 @@ PORT:
     admin_status: up
   Ethernet4:
     admin_status: up
+  Ethernet8:
+    admin_status: up
 VLAN:
   Vlan10:
     vlanid: '10'
@@ -19,7 +21,7 @@ VLAN_INTERFACE:
   Vlan30:
     vrf_name: Vrf01
 VLAN_MEMBER:
-  Vlan10|Ethernet4:
+  Vlan10|Ethernet8:
     tagging_mode: untagged
 VRF:
   Vrf01:
