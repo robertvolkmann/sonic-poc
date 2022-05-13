@@ -10,6 +10,8 @@ topology:
       binds:
         - conf/daemons:/etc/frr/daemons
         - conf/start.sh:/usr/bin/start.sh
+      sysctls:
+        net.ipv6.conf.all.disable_ipv6: 0
   nodes:
     server01:
       kind: linux

@@ -1,10 +1,7 @@
 ---
-INTERFACE:
-  Ethernet0: {}
-  Ethernet0|10.0.0.1/31: {}
 LOOPBACK_INTERFACE:
   Loopback0: {}
-  Loopback0|2.2.2.2/32: {}
+  Loopback0|10.0.0.12/32: {}
 PORT: 
   Ethernet0: 
     admin_status: up
@@ -32,7 +29,7 @@ VXLAN_EVPN_NVO:
     source_vtep: vtep
 VXLAN_TUNNEL:
   vtep:
-    src_ip: 2.2.2.2
+    src_ip: 10.0.0.12
 VXLAN_TUNNEL_MAP:
   vtep|map_2000_Vlan20:
     vlan: Vlan20
