@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+# Forked /usr/bin/start.sh from container iamge docker-sonic-vs
+
 # Generate configuration
 
 # NOTE: 'PLATFORM' and 'HWSKU' environment variables are set
@@ -142,8 +144,12 @@ supervisorctl start intfmgrd
 
 supervisorctl start vlanmgrd
 
-# CHANGED: Added to start frr
-service frr start
+supervisorctl start zebra
+
+supervisorctl start staticd
+
+# CHANGED: Add starting bgpd
+supervisorctl start bgpd
 
 supervisorctl start buffermgrd
 
@@ -164,3 +170,6 @@ VLAN=`sonic-cfggen -d -v 'VLAN.keys() | join(" ") if VLAN'`
 if [ "$VLAN" != "" ]; then
     supervisorctl start arp_update
 fi
+
+# CHANGED: Add reading existing ffr configuration
+vtysh --boot

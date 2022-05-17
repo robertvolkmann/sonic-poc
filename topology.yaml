@@ -1,19 +1,18 @@
-name: sonic-vxlan
+name: sonic-poc
 prefix: ""
 mgmt: {}
 topology:
-  defaults:
-    binds:
-      - conf/daemons:/etc/frr/daemons:ro
-    sysctls:
-      net.ipv6.conf.all.disable_ipv6: 0
   kinds:
     linux:
       image: frrouting/frr:v7.5.1
+      binds:
+        - conf/daemons:/etc/frr/daemons:ro
     sonic-vs:
       image: sonic-vs:202111
       binds:
         - conf/start.sh:/usr/bin/start.sh:ro
+      sysctls:
+        net.ipv6.conf.all.disable_ipv6: 0
   nodes:
     leaf01:
       kind: sonic-vs
