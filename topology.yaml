@@ -49,4 +49,6 @@ topology:
   - endpoints: ["spine02:eth1", "leaf01:eth2"]
   - endpoints: ["spine02:eth2", "leaf02:eth2"]
   - endpoints: ["leaf01:eth3", "server01:eth1"]
-  - endpoints: ["leaf02:eth3", "server02:eth1"]
+  - endpoints: ["leaf01:eth4", "server02:eth1"]
+  - endpoints: ["leaf02:eth3", "server01:eth2"]
+  - endpoints: ["leaf02:eth4", "server02:eth2"]

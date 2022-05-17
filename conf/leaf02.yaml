@@ -1,4 +1,9 @@
 ---
+INTERFACE:
+  Ethernet8:
+    vrf_name: Vrf01
+  Ethernet12:
+    vrf_name: Vrf01
 LOOPBACK_INTERFACE:
   Loopback0: {}
   Loopback0|10.0.0.12/32: {}
@@ -9,22 +14,17 @@ PORT:
     admin_status: up
   Ethernet8:
     admin_status: up
+  Ethernet12:
+    admin_status: up
 VLAN:
-  Vlan20:
-    vlanid: '20'
-  Vlan30:
-    vlanid: '30'
+  Vlan10:
+    vlanid: '10'
 VLAN_INTERFACE:
-  Vlan20:
+  Vlan10:
     vrf_name: Vrf01
-  Vlan30:
-    vrf_name: Vrf01
-VLAN_MEMBER:
-  Vlan20|Ethernet8:
-    tagging_mode: untagged
 VRF:
   Vrf01:
-    vni: '3000'
+    vni: '1000'
 VXLAN_EVPN_NVO:
   nvo:
     source_vtep: vtep
@@ -32,9 +32,6 @@ VXLAN_TUNNEL:
   vtep:
     src_ip: 10.0.0.12
 VXLAN_TUNNEL_MAP:
-  vtep|map_2000_Vlan20:
-    vlan: Vlan20
-    vni: '2000'
-  vtep|map_3000_Vlan30:
-    vlan: Vlan30
-    vni: '3000'
+  vtep|map_1000_Vlan10:
+    vlan: Vlan10
+    vni: '1000'
