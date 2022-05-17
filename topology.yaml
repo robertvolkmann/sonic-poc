@@ -4,7 +4,7 @@ mgmt: {}
 topology:
   defaults:
     binds:
-      - conf/daemons:/etc/frr/daemons
+      - conf/daemons:/etc/frr/daemons:ro
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
   kinds:
@@ -13,36 +13,36 @@ topology:
     sonic-vs:
       image: sonic-vs:202111
       binds:
-        - conf/start.sh:/usr/bin/start.sh
+        - conf/start.sh:/usr/bin/start.sh:ro
   nodes:
     leaf01:
       kind: sonic-vs
       binds:
-        - conf/leaf01.yaml:/etc/sonic/custom_setup.yaml
-        - conf/leaf01.conf:/etc/frr/frr.conf
+        - conf/leaf01.yaml:/etc/sonic/custom_setup.yaml:ro
+        - conf/leaf01.conf:/etc/frr/frr.conf:ro
     leaf02:
       kind: sonic-vs
       binds:
-        - conf/leaf02.yaml:/etc/sonic/custom_setup.yaml
-        - conf/leaf02.conf:/etc/frr/frr.conf
+        - conf/leaf02.yaml:/etc/sonic/custom_setup.yaml:ro
+        - conf/leaf02.conf:/etc/frr/frr.conf:ro
     server01:
       kind: linux
       binds:
-        - conf/server01.conf:/etc/frr/frr.conf
+        - conf/server01.conf:/etc/frr/frr.conf:ro
     server02:
       kind: linux
       binds:
-        - conf/server02.conf:/etc/frr/frr.conf
+        - conf/server02.conf:/etc/frr/frr.conf:ro
     spine01:
       kind: sonic-vs
       binds:
-        - conf/spine01.yaml:/etc/sonic/custom_setup.yaml
-        - conf/spine01.conf:/etc/frr/frr.conf
+        - conf/spine01.yaml:/etc/sonic/custom_setup.yaml:ro
+        - conf/spine01.conf:/etc/frr/frr.conf:ro
     spine02:
       kind: sonic-vs
       binds:
-        - conf/spine02.yaml:/etc/sonic/custom_setup.yaml
-        - conf/spine02.conf:/etc/frr/frr.conf
+        - conf/spine02.yaml:/etc/sonic/custom_setup.yaml:ro
+        - conf/spine02.conf:/etc/frr/frr.conf:ro
   links:
   - endpoints: ["spine01:eth1", "leaf01:eth1"]
   - endpoints: ["spine01:eth2", "leaf02:eth1"]
