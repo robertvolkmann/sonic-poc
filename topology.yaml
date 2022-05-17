@@ -8,7 +8,7 @@ topology:
       binds:
         - conf/daemons:/etc/frr/daemons:ro
     sonic-vs:
-      image: sonic-vs:202111
+      image: robertvolkmann/sonic-vs:202111
       binds:
         - conf/start.sh:/usr/bin/start.sh:ro
       sysctls:
