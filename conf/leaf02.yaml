@@ -1,20 +1,20 @@
 ---
 INTERFACE:
-  Ethernet8:
+  Ethernet3:
     vrf_name: Vrf01
-  Ethernet12:
+  Ethernet4:
     vrf_name: Vrf01
 LOOPBACK_INTERFACE:
   Loopback0: {}
   Loopback0|10.0.0.12/32: {}
 PORT:
-  Ethernet0:
+  Ethernet1:
+    admin_status: up
+  Ethernet2:
+    admin_status: up
+  Ethernet3:
     admin_status: up
   Ethernet4:
-    admin_status: up
-  Ethernet8:
-    admin_status: up
-  Ethernet12:
     admin_status: up
 VLAN:
   Vlan10:

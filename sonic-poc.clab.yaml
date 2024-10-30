@@ -1,18 +1,27 @@
 name: sonic-poc
-prefix: ""
-mgmt: {}
+prefix: __lab-name
+
 topology:
   kinds:
     linux:
-      image: frrouting/frr:v7.5.1
+      image: quay.io/frrouting/frr:10.1.1
       binds:
         - conf/daemons:/etc/frr/daemons:ro
+        - conf/vtysh.conf:/etc/frr/vtysh.conf
     sonic-vs:
-      image: robertvolkmann/sonic-vs:202111
+      image: docker-sonic-vs:latest
+      env:
+        HWSKU: SONiC-VM
       binds:
-        - conf/start.sh:/usr/bin/start.sh:ro
-      sysctls:
-        net.ipv6.conf.all.disable_ipv6: 0
+        - sonic-entrypoint.sh:/usr/bin/start.sh:ro
+      healthcheck:
+        test:
+          - CMD-SHELL
+          - supervisorctl status start.sh | grep -q EXITED
+        start-period: 10
+        retries: 10
+        interval: 2
+        timeout: 2
   nodes:
     leaf01:
       kind: sonic-vs
@@ -43,11 +52,11 @@ topology:
         - conf/spine02.yaml:/etc/sonic/custom_setup.yaml:ro
         - conf/spine02.conf:/etc/frr/frr.conf:ro
   links:
-  - endpoints: ["spine01:eth1", "leaf01:eth1"]
-  - endpoints: ["spine01:eth2", "leaf02:eth1"]
-  - endpoints: ["spine02:eth1", "leaf01:eth2"]
-  - endpoints: ["spine02:eth2", "leaf02:eth2"]
-  - endpoints: ["leaf01:eth3", "server01:eth1"]
-  - endpoints: ["leaf01:eth4", "server02:eth1"]
-  - endpoints: ["leaf02:eth3", "server01:eth2"]
-  - endpoints: ["leaf02:eth4", "server02:eth2"]
+    - endpoints: [ "spine01:eth1", "leaf01:eth1" ]
+    - endpoints: [ "spine01:eth2", "leaf02:eth1" ]
+    - endpoints: [ "spine02:eth1", "leaf01:eth2" ]
+    - endpoints: [ "spine02:eth2", "leaf02:eth2" ]
+    - endpoints: [ "leaf01:eth3", "server01:eth1" ]
+    - endpoints: [ "leaf01:eth4", "server02:eth1" ]
+    - endpoints: [ "leaf02:eth3", "server01:eth2" ]
+    - endpoints: [ "leaf02:eth4", "server02:eth2" ]

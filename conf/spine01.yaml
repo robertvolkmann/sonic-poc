@@ -3,9 +3,9 @@ LOOPBACK_INTERFACE:
   Loopback0: {}
   Loopback0|10.0.0.21/32: {}
 PORT:
-  Ethernet0:
+  Ethernet1:
     admin_status: up
-  Ethernet4:
+  Ethernet2:
     admin_status: up
-  Ethernet8:
+  Ethernet3:
     admin_status: up
